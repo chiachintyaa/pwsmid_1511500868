@@ -53,8 +53,8 @@ class CategoryController extends Controller
 
         $this->response->created();
 
+        $this->response->error('data berhasil diinsert',200);
 
-        return json_encode("berhasil");
     }
     public function update($id,Request $request){
         try{
@@ -92,5 +92,6 @@ class CategoryController extends Controller
             $this->response->error($e,500);
         }
         $this->response->noContent();
+        $this->response->error('data berhasil dihapus',200);
     }
 }

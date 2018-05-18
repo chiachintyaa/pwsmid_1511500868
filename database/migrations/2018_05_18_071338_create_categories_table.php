@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Categories extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -18,6 +18,14 @@ class Categories extends Migration
             $table->string('name');
             $table->timestamps();
         });
+
+        Schema::table('books', function (Blueprint $table) {
+            $table->foreign('bookcategory')
+                ->references('id')
+                ->on('categories')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+        });
     }
 
     /**
@@ -27,6 +35,9 @@ class Categories extends Migration
      */
     public function down()
     {
-        Schema::drop('categories');
+        Schema::table('books',function(Blueprint $table){
+            $table->dropForeign('books_bookcategory_foreign');
+        });
+        Schema::dropIfExists('categories');
     }
 }
